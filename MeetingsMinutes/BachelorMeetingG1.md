@@ -43,7 +43,7 @@ We'll be working with Illustris-3-Dark. The column names indicate the following:
 
 Look at a redshift of z = 0 and do the following:
 
-- [ ] play with the shit
+- play with the shit
 - turn particle distributions to density distributions
 - make visualisations (3D, xy slices, etc.)
 - (can do) make a redhsift map by looking also at the velocities of particles
