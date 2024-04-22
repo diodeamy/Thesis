@@ -1,12 +1,12 @@
 # Info Sesh 22.04
 
-no processing happends in the home directory. You need to do all your operations for big files on the data server folder
+no processing happens in the home directory. You need to do all your operations for big files on the data server folder
 
 files can't be written properly and configurations files will be corrupted
 
-.bashrc config for current environment. you can put the version of python you want here so itlalways starts iwht dame version
+.bashrc config for current environment. you can put the version of python you want here so it always starts with same version
 
-data crossmounts were done so u can see your data on any machine
+data cross-mounts were done so u can see your data on any machine
 
 -rtl reverse sorting in time with long listing
 
@@ -45,3 +45,5 @@ pip --user installs package in .local folder and sets a python path as that fold
 <computergroup@astro.rug.nl> for little questions
 
 <helpdesk@astro.rug.nl> uses tickets for more serious stuff
+
+build up: you can store the data from Illustris on the network (where we created the PROJECT folder) and access it via ssh from norma
