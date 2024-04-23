@@ -4,3 +4,6 @@ code/.ipynb_checkpoints
 
 # VSCode
 .vscode
+
+# Apple stuff
+**/.DS_Store
