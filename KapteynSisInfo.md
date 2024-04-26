@@ -47,3 +47,5 @@ pip --user installs package in .local folder and sets a python path as that fold
 <helpdesk@astro.rug.nl> uses tickets for more serious stuff
 
 build up: you can store the data from Illustris on the network (where we created the PROJECT folder) and access it via ssh from norma
+
+https://shell.astro.rug.nl/
