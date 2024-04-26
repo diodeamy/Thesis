@@ -16,3 +16,18 @@
 - for DTFE, is the density at the boundary supposed to be 0 like for an isolated universe or similar to the density inside the box?
 
 ## What I found out
+
+### Important
+
+- periodic boundary conditions on the data ( all represented in fourier space on a grid, that's why each box repeats infinitely)
+- on a grid waves run from the fundamental wave : smallest wave is 2pi/L: Niquest frequency: you need at least 2 cells to represent a sine
+- **you can always shift a box central point because the box repeats infinitely** so you still have data, even on a cluster that is near the edges
+- "fingers of god": some clusters have huge velocities which means when you observe them, there is a large random redshift just because of the velocity
+- do 128^3 datapoints
+- what grid? should be in the order of the # of points because of shot noise (cube root of N)
+- use 128^3, 256^3, 512^3 powers of 2
+
+## APs
+
+- do 3 timesteps: get positions, try to make paths of the clumps: do it for 1000 particles: get different colours for the position and plot them together to see movement
+- for the love of god make your graphs look nicer
