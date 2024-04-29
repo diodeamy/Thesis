@@ -13,4 +13,4 @@ As far as the professor has told me, there is a gap in research because this phe
 
 ### mindmap
 
-I think I would have like to see each bubble in the map somehow explained in the paper summary or the connections between them made clear.
+I think I would have like to see each bubble in the map somehow explained in the paper summary or the connections between them made clear. I think it makes quite clear what the process is; you start with some elements, you add some assumptions and you get a result.
