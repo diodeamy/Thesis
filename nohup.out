@@ -1,0 +1,24 @@
+https://www.illustris-project.org/api/Illustris-3-Dark/files/Csnapshot-58/?format=api:
+2024-05-01 17:54:56 ERROR 404: Not Found.
+2024-05-01 17:55:23 URL:https://www.illustris-project.org/api/Illustris-3-Dark/files/groupcat-60/?format=api [8978/8978] -> "index.html?format=api" [1]
+2024-05-01 17:55:23 URL:https://www.illustris-project.org/ [10735/10735] -> "index.html" [1]
+2024-05-01 17:55:23 URL:https://www.illustris-project.org/about/ [54505/54505] -> "index.html" [1]
+2024-05-01 17:55:23 URL:https://www.illustris-project.org/people/ [12058/12058] -> "index.html" [1]
+2024-05-01 17:55:23 URL:https://www.illustris-project.org/results/ [143471/143471] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/press/ [42526/42526] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/media/ [21796/21796] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/data/ [19866/19866] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/explorer/ [9053/9053] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/galaxy_obs/ [21207/21207] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/users/login/ [5511/5511] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/users/login/ [5511/5511] -> "index.html" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/api/?format=api [24396/24396] -> "index.html?format=api" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/api/Illustris-3-Dark/?format=api [10605/10605] -> "index.html?format=api" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/api/Illustris-3-Dark/files/?format=api [59538/59538] -> "index.html?format=api" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/api/Illustris-3-Dark/files/groupcat-60/?format=api [8978/8978] -> "index.html?format=api" [1]
+2024-05-01 17:55:24 URL:https://www.illustris-project.org/api/Illustris-3-Dark/files/groupcat-60/?format=json [173/173] -> "index.html?format=json" [1]
+2024-05-01 17:55:25 URL:https://data-eu.illustris-project.org/file/groupcat/L75n455DM/60/0/?token=1bfe0d3123f283a1d787 [21429720/21429720] -> "groups_060.0.hdf5" [1]
+2024-05-01 17:55:26 URL:https://data-eu.illustris-project.org/file/groupcat/L75n455DM/60/1/?token=17df5ff42587f348f4c6 [21429888/21429888] -> "groups_060.1.hdf5" [1]
+FINISHED --2024-05-01 17:55:26--
+Total wall clock time: 2.8s
+Downloaded: 19 files, 41M in 0.6s (70.7 MB/s)
