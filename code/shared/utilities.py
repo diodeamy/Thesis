@@ -2,6 +2,7 @@ import illustris_python as il
 import numpy as np
 import matplotlib as mpl
 import shared
+base_path = "/Users/users/nastase/PROJECT/"
 
 
 def get_redshift_dictionary():
@@ -72,6 +73,12 @@ def get_snapshot_cluster_coordinates(base_snapshot_id: int, subhalo_id: int, tes
     plt.legend()
     ```
     """
+    import illustris_python as il
+    import numpy as np
+    import matplotlib as mpl
+    import shared
+    base_path = "/Users/users/nastase/PROJECT/"
+    
 
     subhalo = il.snapshot.loadSubhalo(base_path, base_snapshot_id, subhalo_id, 'DM')
     subhalo_particle_ids = subhalo['ParticleIDs']
@@ -90,6 +97,8 @@ def get_snapshot_cluster_coordinates(base_snapshot_id: int, subhalo_id: int, tes
 
 
 def get_coordinates_for_particleIDs(data, particle_ids):
+    
+    base_path = "/Users/users/nastase/PROJECT/"
     coordinates = data['Coordinates']
     ids = data['ParticleIDs']
     
