@@ -1,3 +1,9 @@
+import illustris_python as il
+import numpy as np
+import matplotlib as mpl
+import shared
+
+
 def get_redshift_dictionary():
     
     snapshot_redshift_pairs = [
