@@ -101,3 +101,12 @@ def get_coordinates_for_particleIDs(data, particle_ids):
         print("Warning: Some particle IDs were not found.")
     
     return coordinates[valid_indices]
+
+def load_results(path, base_snapshot_id, subhalo_id):
+    filename = f"{path}/coordinates_base_snapshot_{base_snapshot_id}_subhalo_{subhalo_id}.pickle"
+    
+    print(f"Reading your stuffy stuff from: {filename}")
+    with open(filename, "r") as f:
+        python_results = pickle.load(f)
+        
+    return python_results
