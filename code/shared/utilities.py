@@ -1,5 +1,7 @@
 import illustris_python as il
 import numpy as np
+from joblib import Parallel, delayed
+import pickle
 
 base_path = "/Users/users/nastase/PROJECT/"
 
@@ -76,14 +78,23 @@ def get_snapshot_cluster_coordinates(base_snapshot_id: int, subhalo_id: int, tes
     subhalo_particle_ids = subhalo['ParticleIDs']
     subhalo_coordinates = subhalo['Coordinates']
 
-    test_coordinates = {}
+    test_coordinates = {base_snapshot_id: subhalo_coordinates}
+    
+    def load_and_match_coordinates(test_snapshot_id):
+        coords_ids = il.snapshot.loadSubset(base_path, test_snapshot_id, 'dm', ['Coordinates', 'ParticleIDs'])
+        coordinates = get_coordinates_for_particleIDs(coords_ids, subhalo_particle_ids)
+        
+        return test_snapshot_id, coordinates
+    
+    results = Parallel(n_jobs=-1)(delayed(load_and_match_coordinates)(test_snapshot_id) for test_snapshot_id in test_snapshot_ids)
+    
+    for snapshot_id, coordinates in results:
+        test_coordinates[snapshot_id] = coordinates
 
-    test_coordinates[base_snapshot_id] = subhalo_coordinates
-
-    for test_snapshot_id in test_snapshot_ids:
-      coords_ids = il.snapshot.loadSubset(base_path, test_snapshot_id, 'dm', ['Coordinates', 'ParticleIDs'])
-      coordinates = get_coordinates_for_particleIDs(coords_ids, subhalo_particle_ids)
-      test_coordinates[test_snapshot_id] = coordinates
+#     for test_snapshot_id in test_snapshot_ids:
+#       coords_ids = il.snapshot.loadSubset(base_path, test_snapshot_id, 'dm', ['Coordinates', 'ParticleIDs'])
+#       coordinates = get_coordinates_for_particleIDs(coords_ids, subhalo_particle_ids)
+#       test_coordinates[test_snapshot_id] = coordinates
 
     return test_coordinates
 
@@ -93,20 +104,29 @@ def get_coordinates_for_particleIDs(data, particle_ids):
     coordinates = data['Coordinates']
     ids = data['ParticleIDs']
     
-    id_to_index = {particle_id: index for index, particle_id in enumerate(ids)}
-    particle_indices = [id_to_index.get(particle_id) for particle_id in particle_ids]
-    valid_indices = [index for index in particle_indices if index is not None]
+    sorted_indices = np.argsort(ids)
+    sorted_ids = ids[sorted_indices]
     
-    if len(valid_indices) != len(particle_indices):
+    pos = np.searchsorted(sorted_ids, particle_ids)
+    matched_indices = sorted_indices[pos]
+    
+    valid_mask = sorted_ids[pos] == particle_ids
+    valid_indices = matched_indices[valid_mask]
+    
+#     id_to_index = {particle_id: index for index, particle_id in enumerate(ids)}
+#     particle_indices = [id_to_index.get(particle_id) for particle_id in particle_ids]
+#     valid_indices = [index for index in particle_indices if index is not None]
+    
+    if len(valid_indices) != len(particle_ids):
         print("Warning: Some particle IDs were not found.")
     
     return coordinates[valid_indices]
 
-def load_results(path, base_snapshot_id, subhalo_id):
+def load_results(path,base_snapshot_id, subhalo_id):
     filename = f"{path}/coordinates_base_snapshot_{base_snapshot_id}_subhalo_{subhalo_id}.pickle"
     
     print(f"Reading your stuffy stuff from: {filename}")
-    with open(filename, "r") as f:
+    with open(filename, "rb") as f:
         python_results = pickle.load(f)
         
     return python_results
