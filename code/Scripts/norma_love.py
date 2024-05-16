@@ -18,7 +18,7 @@ def save_results(path, data, base_snapshot_id, subhalo_id):
     print(f"I'm saving the results and stuff to: {path}")
     filename = f"{path}/coordinates_base_snapshot_{base_snapshot_id}_subhalo_{subhalo_id}.pickle"
     
-    with open(filename, "w") as f:
+    with open(filename, "wb") as f:
         pickle.dump(data, f)
         
         
@@ -35,43 +35,43 @@ def main():
     {"base_snapshot_id": 49,
      "subhalo_id": 0,
      "test_snapshot_ids":snapshot_values}
-#     },
-#     {"base_snapshot_id" :49,
-#      "subhalo_id": 30,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :49,
-#      "subhalo_id":24 ,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :49,
-#      "subhalo_id": 40,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :49,
-#      "subhalo_id": 6,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :135,
-#      "subhalo_id": 0,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :135,
-#      "subhalo_id" : 574,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :135,
-#      "subhalo_id" : 961,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :135,
-#      "subhalo_id" : 1661,
-#      "test_snapshot_ids":snapshot_values    
-#     },
-#     {"base_snapshot_id" :135,
-#      "subhalo_id" : 1890,
-#      "test_snapshot_ids":snapshot_values    
-#     }
+    },
+    {"base_snapshot_id" :49,
+     "subhalo_id": 30,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :49,
+     "subhalo_id":24 ,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :49,
+     "subhalo_id": 40,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :49,
+     "subhalo_id": 6,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :135,
+     "subhalo_id": 0,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :135,
+     "subhalo_id" : 574,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :135,
+     "subhalo_id" : 961,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :135,
+     "subhalo_id" : 1661,
+     "test_snapshot_ids":snapshot_values    
+    },
+    {"base_snapshot_id" :135,
+     "subhalo_id" : 1890,
+     "test_snapshot_ids":snapshot_values    
+    }
     ]
     
     pickle_results = {}
@@ -91,8 +91,8 @@ def main():
         save_results("/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements", coordinates, base_snapshot_id, subhalo_id)
         
     all_results_path = "/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements/all_results.pickle"
-    with open(all_results_path, "w") as f:
-        pickle.dump(all_results, f)
+    with open(all_results_path, "wb") as f:
+        pickle.dump(all_results_path, f)
     
     print(f"All your stuff was saved to: {all_results_path}")
     
