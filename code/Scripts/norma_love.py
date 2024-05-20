@@ -88,9 +88,9 @@ def main():
                 
         pickle_results[result_key] = coordinates
         
-        save_results("/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements", coordinates, base_snapshot_id, subhalo_id)
+        save_results("/Users/users/nastase/PROJECT/DATA/Data/W5_subhalo_movements", coordinates, base_snapshot_id, subhalo_id)
         
-    all_results_path = "/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements/all_results.pickle"
+    all_results_path = "/Users/users/nastase/PROJECT/DATA/Data/W5_subhalo_movements/all_results.pickle"
     with open(all_results_path, "wb") as f:
         pickle.dump(pickle_results, f)
     
