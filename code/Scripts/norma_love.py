@@ -34,7 +34,7 @@ def main():
     argument_sets = [
     {"base_snapshot_id": 49,
      "subhalo_id": 0,
-     "test_snapshot_ids":snapshot_values}
+     "test_snapshot_ids":snapshot_values
     },
     {"base_snapshot_id" :49,
      "subhalo_id": 30,
@@ -85,14 +85,14 @@ def main():
     
         #save the results
         result_key = f"snapshot_{base_snapshot_id}_subhalo{subhalo_id}"
-        
+                
         pickle_results[result_key] = coordinates
         
         save_results("/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements", coordinates, base_snapshot_id, subhalo_id)
         
     all_results_path = "/Users/users/nastase/GitBub/Thesis/code/Data/W5_subhalo_movements/all_results.pickle"
     with open(all_results_path, "wb") as f:
-        pickle.dump(all_results_path, f)
+        pickle.dump(pickle_results, f)
     
     print(f"All your stuff was saved to: {all_results_path}")
     
