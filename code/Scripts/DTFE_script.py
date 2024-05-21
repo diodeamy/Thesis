@@ -40,7 +40,7 @@ def check_snapshot_exists(snapshot_number, base_path):
     
     if matching_dirs:
         print("Matching snapshot directory found:")
-        for dicetory in matching_dirs:
+        for directory in matching_dirs:
             print(directory)
         return True
     else:
@@ -103,7 +103,7 @@ def get_zmin(min_value, max_value):
             else:
                 print(f"the bound is out of bounds! :)) please choose something between {min_value} - {max_value}.")
 
-def get_xmax(min_value, max_value):
+def get_zmax(min_value, max_value):
     while True:
         zmax = input("please state the upper 'Z' bound for the area you want tesselated: ")
         
@@ -138,12 +138,12 @@ def main():
     snapshot_number = get_snapshot_number()
     check_snapshot_exists(snapshot_number, base_path)
     
-    get_xmin(min_value, max_value)
-    get_xmax(min_value, max_valuemin_value, max_value)
-    get_ymin(min_value, max_value)
-    get_ymax(min_value, max_value)
-    get_zmin(min_value, max_value)
-    get_zmax(min_value, max_value)
+    xmin = get_xmin(min_value, max_value)
+    xmax = get_xmax(min_value, max_value, min_value, max_value)
+    ymin = get_ymin(min_value, max_value)
+    ymax = get_ymax(min_value, max_value)
+    zmin = get_zmin(min_value, max_value)
+    zmax = get_zmax(min_value, max_value)
     
     dm_pos, dm_vel = load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax)
     
