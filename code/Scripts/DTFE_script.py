@@ -3,6 +3,7 @@ import pickle
 import os
 import glob
 import illustris_python as il
+import numpy as np
 
 sys.path.append('..')
 
@@ -115,7 +116,7 @@ def get_zmax(min_value, max_value):
                 print(f"the bound is out of bounds! :)) please choose something between {min_value} - {max_value}.")
                 
                 
-def load_datapoints(snapshot_number, xmin=30000, xmax=30000, ymin=30000, ymax=30000, zmin=30000, zmax=30000):
+def load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax):
     dm_data = il.snapshot.loadSubset(base_path,snapshot_number,'dm',['Coordinates', 'Velocities'])
     dm_pos_all = dm_data['Coordinates']
     dm_vel_all = dm_data['Velocities']
@@ -126,9 +127,9 @@ def load_datapoints(snapshot_number, xmin=30000, xmax=30000, ymin=30000, ymax=30
     z_filter = (dm_pos_all[:,2] >= zmin) & (dm_pos_all[:,2] <= zmax)    
     
     total_filter = x_filter & y_filter & z_filter
-    
-    dm_pos = dm_pos_all[total_filter]
-    dm_vel = dm_vel_all[total_filter]
+   
+    dm_pos = dm_pos_all[total_filter].astype(np.float64)
+    dm_vel = dm_vel_all[total_filter].astype(np.float64)
     
     return dm_pos, dm_vel
 
@@ -147,7 +148,12 @@ def main():
     
     dm_pos, dm_vel = load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax)
         
-    m = np.ones(len(points))
+    m = np.ones(len(dm_pos))
     
     dtfe = DTFE(dm_pos, dm_vel, m)
+    
+    save_results(f"/Users/users/nastase/PROJECT/DATA/Data/W6_DTFE/persisted_dtfe_{snapshot_number}", dtfe)
+    
+if __name__ == "__main__":
+    main()
     
