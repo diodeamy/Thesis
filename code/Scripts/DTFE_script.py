@@ -9,7 +9,7 @@ sys.path.append('..')
 from shared.DTFE_utilities import DTFE, GRF, Zeldovich
 
     
-L = 128
+L = 455
 sigma = 8
 gamma = 1
 base_path =  "/Users/users/nastase/PROJECT/"
@@ -19,7 +19,7 @@ max_value = 75000
 
 def save_results(path, data):
     print(f"I'm saving the results and stuff to: {path}")
-    filename = f"{path}/coordinates_base_snapshot_{base_snapshot_id}_subhalo_{subhalo_id}.pickle"
+    filename = f"{path}.pickle"
     
     with open(filename, "wb") as f:
         pickle.dump(data, f)
@@ -147,6 +147,9 @@ def main():
     
     dm_pos, dm_vel = load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax)
     
+    grf = GRF(L, gamma, sigma)
     
+    points, velocities = Zeldovich(grf, 20)
     
+    m = np.ones(len(points))
     
