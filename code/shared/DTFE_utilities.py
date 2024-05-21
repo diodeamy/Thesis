@@ -7,6 +7,10 @@ import illustris_python as il
 import shared
 import matplotlib.pyplot as plt
 
+L = 455
+sigma = 8
+gamma = 1
+
 @numba.jit(nopython=True, nogil=True)
 def tetrahedron_volume(sim: int64[:], points: float64[:,:]):
     return abs(np.linalg.det(np.stack((points[sim[1]] - points[sim[0]], 
@@ -135,9 +139,3 @@ def Zeldovich(grf, D):
     X, Y, Z = np.meshgrid(np.arange(L), np.arange(L), np.arange(L))
     points = np.transpose(np.array([X, Y, Z]), (1,2,3,0)) + D * velocities
     return (points.reshape(L**3, 3), velocities.reshape(L**3, 3))
-
-grf = GRF(L, gamma, sigma)
-points, velocities = Zeldovich(grf, 20)
-m = np.ones(len(points))
-
-

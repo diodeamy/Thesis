@@ -147,9 +147,11 @@ def main():
     
     dm_pos, dm_vel = load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax)
     
-    grf = GRF(L, gamma, sigma)
+#     grf = GRF(L, gamma, sigma)
     
-    points, velocities = Zeldovich(grf, 20)
+#     points, velocities = Zeldovich(grf, 20)
     
     m = np.ones(len(points))
+    
+    dtfe = DTFE(dm_pos, dm_vel, m)
     
