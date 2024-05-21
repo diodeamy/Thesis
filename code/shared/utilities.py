@@ -2,6 +2,8 @@ import illustris_python as il
 import numpy as np
 from joblib import Parallel, delayed
 import pickle
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 
 base_path = "/Users/users/nastase/PROJECT/"
 
@@ -130,3 +132,101 @@ def load_results(path,base_snapshot_id, subhalo_id):
         python_results = pickle.load(f)
         
     return python_results
+
+def load_all_results(path):
+    filename = f"{path}/all_results.pickle"
+    
+    print(f"Reading ALL stuffy stuff from: {filename}")
+    with open(filename, "rb") as f:
+        python_all_results = pickle.load(f)
+        
+    return python_all_results
+
+def plot_2D_histogram(coordinates_dict, coordinate_pair = 'xy', save_path=None):
+    """
+    plot 2D histograms of particle coordinates of a particular subhalo, for a specific snapshot
+    
+    Params:
+    'coordonates_dict (dict)': Dictionary containing the particle coordinates for a specific cluster
+                        Keys are snapshot numbers, values are arrays  of coordinates (x, y, z)
+    'coordinate_pair (str)': Pair of coordinates to be plotted. Options: 'xy', 'xz', 'yz'
+    'save_path (str)': Path to save the figures. If None, figures will not be saved
+    
+    
+    """
+    
+    valid_coordinate_pairs = ['xy', 'xz', 'yz']
+    if coordinate_pair not in valid_coordinate_pairs:
+        raise ValueError("Invalid coordinate pair! Please choose from 'xy', 'xz' or 'yz'.")
+  
+    
+    if coordinate_pair == "xy":
+        all_x_coords = [coords[:, 0] for coords in coordinates_dict.values()]
+        all_y_coords = [coords[:, 1] for coords in coordinates_dict.values()]
+        
+    elif coordinate_pair == "xz":
+        all_x_coords = [coords[:, 0] for coords in coordinates_dict.values()]
+        all_y_coords = [coords[:, 2] for coords in coordinates_dict.values()]        
+    else:
+        all_x_coords = [coords[:, 1] for coords in coordinates_dict.values()]
+        all_y_coords = [coords[:, 2] for coords in coordinates_dict.values()]
+        
+    all_x_coords = np.concatenate(all_x_coords)
+    all_y_coords = np.concatenate(all_y_coords)
+    
+    x_min, x_max = np.min(all_x_coords), np.max(all_x_coords)
+    y_min, y_max = np.min(all_y_coords), np.max(all_y_coords)
+    
+    for snapshot, coords in coordinates_dict.items():
+        plt.figure(figsize=(8,6))
+        plt.hist2d(coords[:, 0] if coordinate_pair[0] == 'x' else coords[:,1], 
+                   coords[:, 1] if coordinate_pair[1] == 'y' else coords[:,2]
+                   , norm=mpl.colors.LogNorm(), bins = 512)
+        plt.xlabel("X" if coordinate_pair[0] == 'x' else "Y")
+        plt.ylabel("Y" if coordinate_pair[1] == 'y' else "Z")
+        plt.title(f"histogram for snapshot {snapshot}")
+        plt.colorbar(label="Counts")
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+        
+        if save_path:
+            fig_filename = f"{save_path}/snapshot_{snapshot}.png"
+            plt.savefig(fig_filename)
+            print(f"Figure saved! File: {fig_filename}")
+
+#     all_x_coords = []
+#     all_y_coords = []
+    
+#     for snapshot, coords in coordinates_dict.items():
+#         if coordinate_pair == 'xy':
+#             x_coords = coords[:, 0]
+#             y_coords = coords[:, 1]
+#             xlabel, ylabel = 'X [ckpc/h]', 'Y [ckpc/h]'
+#         elif coordinate_pair == 'xz':
+#             x_coords = coords[:, 0]
+#             y_coords = coords[:, 2]
+#             xlabel, ylabel = 'X [ckpc/h]', 'Z [ckpc/h]'
+#         else:
+#             x_coords = coords[:, 1]
+#             y_coords = coords[:, 2]
+#             xlabel, ylabel = 'Y [ckpc/h]', 'Z [ckpc/h]'
+            
+#         all_x_coords.extend(x_coords)
+#         all_y_coords.extend(y_coords)
+      
+#         plt.figure(figsize=(8,6))
+#         plt.hist2d(x_coords, y_coords, norm=mpl.colors.LogNorm(), bins = 512)
+#         plt.xlabel(xlabel)
+#         plt.ylabel(ylabel)
+#         plt.title(f"{xlabel} - {ylabel} histogram for snapshot {snapshot}")
+#         plt.colorbar(label="Counts")
+        
+#         plt.xlim(np.min(all_x_coords), np.max(all_x_coords))
+#         plt.ylim(np.min(all_y_coords), np.max(all_y_coords))
+        
+#         if save_path:
+#             fig_filename = f"{save_path}/snapshot_{snapshot}.png"
+#             plt.savefig(fig_filename)
+#             print(f"Figure saved! File: {fig_filename}")
+            
+        plt.close()
