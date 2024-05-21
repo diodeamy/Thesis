@@ -139,18 +139,14 @@ def main():
     check_snapshot_exists(snapshot_number, base_path)
     
     xmin = get_xmin(min_value, max_value)
-    xmax = get_xmax(min_value, max_value, min_value, max_value)
+    xmax = get_xmax(min_value, max_value)
     ymin = get_ymin(min_value, max_value)
     ymax = get_ymax(min_value, max_value)
     zmin = get_zmin(min_value, max_value)
     zmax = get_zmax(min_value, max_value)
     
     dm_pos, dm_vel = load_datapoints(snapshot_number, xmin, xmax, ymin, ymax, zmin, zmax)
-    
-#     grf = GRF(L, gamma, sigma)
-    
-#     points, velocities = Zeldovich(grf, 20)
-    
+        
     m = np.ones(len(points))
     
     dtfe = DTFE(dm_pos, dm_vel, m)

@@ -7,7 +7,7 @@ import illustris_python as il
 import shared
 import matplotlib.pyplot as plt
 
-L = 455
+L = 128
 sigma = 8
 gamma = 1
 
