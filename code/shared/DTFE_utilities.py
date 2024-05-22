@@ -7,6 +7,7 @@ import illustris_python as il
 import shared
 import matplotlib.pyplot as plt
 import os
+import pickle
 
 # os.environ['NUMBA_NUM_THREADS'] = '2'
 
@@ -14,13 +15,13 @@ L = 128
 sigma = 8
 gamma = 1
 
-@numba.jit(nopython=True, nogil=True, parallel=True)
+@numba.jit(nopython=True, nogil=True)
 def tetrahedron_volume(sim: int64[:], points: float64[:,:]):
     return abs(np.linalg.det(np.stack((points[sim[1]] - points[sim[0]], 
                                        points[sim[2]] - points[sim[0]],
                                        points[sim[3]] - points[sim[0]])))) / 6
 
-@numba.jit(nopython=True, nogil=True, parallel=True)
+@numba.jit(nopython=True, nogil=True)
 def compute_densities(pts: float64[:,:], simps: float64[:,:],
                       m: Union[float64, float64[:]]) -> np.ndarray:
     M = len(pts)
@@ -32,7 +33,7 @@ def compute_densities(pts: float64[:,:], simps: float64[:,:],
             rho[index] += vol
     return (3 + 1) * m / rho
 
-@numba.jit(nopython=True, nogil=True, parallel=True)
+@numba.jit(nopython=True, nogil=True)
 def compute_gradients(pts: float64[:,:], simps: float64[:,:], rho: float64[:],
                       v: float64[:,:]) -> tuple[np.ndarray, np.ndarray]:
     N = len(simps)
@@ -50,7 +51,7 @@ def compute_gradients(pts: float64[:,:], simps: float64[:,:], rho: float64[:],
         Dv[i] = Ainv @ np.stack((v1 - v0, v2 - v0, v3 - v0))
     return (Drho, Dv)
 
-@numba.jit(nopython=True, nogil=True, parallel=True)
+@numba.jit(nopython=True, nogil=True)
 def map_affine(a, b, c):
     assert(len(a) == len(b) == len(c))
     result = np.zeros_like(a)
