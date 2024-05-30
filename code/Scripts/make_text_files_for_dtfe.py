@@ -1,7 +1,7 @@
 import illustris_python as il
 import numpy as np
 import sys
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 sys.path.append('..')
 
@@ -17,9 +17,11 @@ def load_data(snapshot_number):
     return data
 
 def process_snapshot(snapshot_number):
+    print(f"Start processing {snapshot_number}")
     data = load_data(snapshot_number)
     convert_data_to_tex_even_faster(data, snapshot_number, output_path)
-
+    
+    print(f"Finish processing {snapshot_number}")
 
 def convert_data_to_tex_even_faster(data, snapshot_number, path):
     
@@ -47,8 +49,13 @@ def convert_data_to_tex_even_faster(data, snapshot_number, path):
 def main():
     
     dictionary = get_redshift_dictionary()
-    snapshot_numbers = [135, 133]
-        
+    snapshot_numbers = [49, 58, 70, 82, 94, 110, 122]
+
+#     ##this is for more I/O bound tasks    
+#     with ThreadPoolExecutor() as executor:
+#         executor.map(process_snapshot, snapshot_numbers)
+    
+    ##this is for more other kinds of tasks? 
     with ProcessPoolExecutor() as executor:
         executor.map(process_snapshot, snapshot_numbers)
 
