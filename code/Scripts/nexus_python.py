@@ -20,7 +20,7 @@
 
 
 # the path to the directory with the executable files
-binDir    = '../bin/'
+binDir    = 'Users/users/nastase/Applications/NEXUS_python/NEXUS_1.0/bin/'
 # the input density file
 densityFile = 'density.a_den'
 # uncomment the following if to write the console messages to a log file. You can select a different log file name.
