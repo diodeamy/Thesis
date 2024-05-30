@@ -1,6 +1,7 @@
 import illustris_python as il
 import numpy as np
 import sys
+from concurrent.futures import ProcessPoolExecutor
 
 sys.path.append('..')
 
@@ -14,6 +15,11 @@ def load_data(snapshot_number):
     data["Masses"] = np.ones(len(data["Coordinates"]))
     
     return data
+
+def process_snapshot(snapshot_number):
+    data = load_data(snapshot_number)
+    convert_data_to_tex_even_faster(data, snapshot_number, output_path)
+
 
 def convert_data_to_tex_even_faster(data, snapshot_number, path):
     
@@ -41,10 +47,10 @@ def convert_data_to_tex_even_faster(data, snapshot_number, path):
 def main():
     
     dictionary = get_redshift_dictionary()
-    
-    for snapshot_number in dictionary["snapshots"]:
-        data = load_data(snapshot)
-        convert_data_to_tex_even_faster(data, snapshot, output_path)
+    snapshot_numbers = [135, 133]
         
+    with ProcessPoolExecutor() as executor:
+        executor.map(process_snapshot, snapshot_numbers)
+
 if __name__ == "__main__":
     main()
