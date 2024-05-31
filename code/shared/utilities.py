@@ -43,10 +43,15 @@ def get_redshift_dictionary():
         (49, 5.00),
         
     ]
+    snapshots = [snapshot for snapshot, _ in snapshot_redshift_pairs]
+    redshifts = [redshift for _, redshift in snapshot_redshift_pairs]
     
-    snapshot_redshifts = {snapshot: redshift for snapshot, redshift in snapshot_redshift_pairs}
+    result_dict = {
+        "snapshots": snapshots,
+        "redshifts": redshifts
+    }
     
-    return snapshot_redshifts
+    return result_dict
 
 
 def get_snapshot_cluster_coordinates(base_snapshot_id: int, subhalo_id: int, test_snapshot_ids: list[int]):

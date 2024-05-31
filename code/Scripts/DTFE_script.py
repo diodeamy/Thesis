@@ -7,7 +7,7 @@ import numpy as np
 
 sys.path.append('..')
 
-from shared.DTFE_utilities import DTFE, GRF, Zeldovich
+from shared.DTFE_utilities_nonparallel import DTFE, GRF, Zeldovich
 
     
 L = 455
