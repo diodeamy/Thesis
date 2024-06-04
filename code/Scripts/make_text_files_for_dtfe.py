@@ -27,7 +27,6 @@ def convert_data_to_tex_even_faster(data, snapshot_number, path):
     
     particle_number = data["count"]
     coordinates = data["Coordinates"]
-    velocities = data["Velocities"]
     masses = data["Masses"]
     
     box_min = 0
@@ -35,11 +34,11 @@ def convert_data_to_tex_even_faster(data, snapshot_number, path):
     
     filename = f"{path}/file_{snapshot_number}.txt"
     header = f"{particle_number}\n{box_min:.6f} {box_max:.6f} {box_min:.6f} {box_max:.6f} {box_min:.6f} {box_max:.6f}\n"
-    
-    all_data = np.hstack((coordinates, velocities, masses.reshape(-1, 1)))
+    all_data = np.hstack((coordinates, masses.reshape(-1, 1)))
+
     
     # Convert all data to formatted strings
-    lines = "\n".join(f"{x:.6f} {y:.6f} {z:.6f} {vx:.6f} {vy:.6f} {vz:.6f} {m:.6f}" for x, y, z, vx, vy, vz, m in all_data)
+    lines = "\n".join(f"{x:.6f} {y:.6f} {z:.6f} {m:.6f}" for x, y, z, m in all_data ) 
     
     with open(filename, 'w') as f:
         f.write(header)
@@ -49,7 +48,8 @@ def convert_data_to_tex_even_faster(data, snapshot_number, path):
 def main():
     
     dictionary = get_redshift_dictionary()
-    snapshot_numbers = [49, 58, 70, 82, 94, 110, 122]
+    snapshot_numbers = dictionary['snapshots']
+#     snapshot_numbers = [135]
 
 #     ##this is for more I/O bound tasks    
 #     with ThreadPoolExecutor() as executor:
