@@ -4,30 +4,33 @@ import numpy as np
 import os
 import h5py
 
-def importFiles(timestep, path='./'):
+basepath = "/Users/users/nastase/PROJECT"
+
+def importFiles(timestep, path=basepath):
     c_coordinates = None
     c_velocities = None
     c_ids = None
-    for file in os.listdir(path):
+    snapshot_dir_path = f"{basepath}/snapdir_{timestep}"
+    for file in os.listdir(snapshot_dir_path):
         if 'hdf5' in file:
-            if timestep in file:
-                coordinates = h5py.File(path + file, 'r')['PartType1']['Coordinates'][:]
-                velocities = h5py.File(path + file, 'r')['PartType1']['Velocities'][:]
-                ids = h5py.File(path + file, 'r')['PartType1']['ParticleIDs'][:]
-                if c_coordinates is None:
-                    c_coordinates = coordinates 
-                if c_velocities is None:
-                    c_velocities = velocities 
-                if c_ids is None:
-                    c_ids = ids 
-                else:
-                    c_coordinates = np.concatenate((c_coordinates, coordinates), axis = 0)
-                    c_velocities = np.concatenate((c_velocities, velocities), axis = 0)
-                    c_ids = np.concatenate((c_ids, ids), axis = 0)
-                    
-    c_coordinates = c_coordinates/75000 * 256 # changing the scale to Mpc/h
+            print(f"Processing file: {file}")
+            coordinates = h5py.File(f"{snapshot_dir_path}/{file}", 'r')['PartType1']['Coordinates'][:]
+            velocities = h5py.File(f"{snapshot_dir_path}/{file}", 'r')['PartType1']['Velocities'][:]
+            ids = h5py.File(f"{snapshot_dir_path}/{file}", 'r')['PartType1']['ParticleIDs'][:]
+            if c_coordinates is None:
+                c_coordinates = coordinates 
+            if c_velocities is None:
+                c_velocities = velocities 
+            if c_ids is None:
+                c_ids = ids 
+            else:
+                c_coordinates = np.concatenate((c_coordinates, coordinates), axis = 0)
+                c_velocities = np.concatenate((c_velocities, velocities), axis = 0)
+                c_ids = np.concatenate((c_ids, ids), axis = 0)
+        
+    c_coordinates = c_coordinates/75000 * 512 # changing the scale to Mpc/h
     c_coordiantes = c_coordinates.astype(np.float32)
-    
+#     print(len(c_coordinates), len( c_velocities), len(c_ids))
     return c_coordinates, c_velocities, c_ids
 
 def order_ids(pos, vel, ids):
@@ -74,8 +77,10 @@ def write_gadget(header, ds_coordinates, ds_velocities, ds_ids, name):
         f.write(struct.pack('i', record_size))
         f.write(data)
         f.write(struct.pack('i', record_size))
+        
+    path = "/Users/users/nastase/PROJECT/DATA/gadgets"
+    with open(f"{path}/snapshot_{name}.gadget", 'wb') as f:
     
-    with open("snap_" + name + ".gadget", 'wb') as f:
         # Write the header
         write_fortran_record(f, header.tobytes())
     
@@ -135,8 +140,8 @@ def main():
 
         pos, vel, ids = importFiles(step)
         print(f"Converting timestep {step}")
-        ord_pos, ord_vel = order_ids(pos, vel, ids)
-        rand_pos, rand_vel, ids = random_downsample(ord_pos, ord_vel, 0.1)
+        ord_pos, ord_vel, ord_ids = order_ids(pos, vel, ids)
+        rand_pos, rand_vel, ids = random_downsample(ord_pos, ord_vel, 1)
         rand_pos = rand_pos.astype(np.float32)
         rand_vel = rand_vel.astype(np.float32)
         m = np.ones(len(rand_pos))
@@ -153,7 +158,7 @@ def main():
         header['npartTotal'] = [0, len(rand_pos), 0, 0, 0, 0] #was 94196375
         header['flag_cooling'] = 0
         header['num_files'] = 1 #was 8
-        header['BoxSize'] = 256.0  # Ensuring it's a large enough box
+        header['BoxSize'] = 512.0  # Ensuring it's a large enough box
         header['Omega0'] = 0.2726
         header['OmegaLambda'] = 0.7274
         header['HubbleParam'] = 0.704
