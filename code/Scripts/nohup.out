@@ -12,3 +12,9 @@ Start processing 49
 Finish processing 49
 Start processing 70
 Finish processing 70
+Traceback (most recent call last):
+  File "/Users/users/nastase/GitBub/Thesis/code/Scripts/nexus_multiple_redshifts_script.py", line 133, in <module>
+    
+  File "/Users/users/nastase/GitBub/Thesis/code/Scripts/nexus_multiple_redshifts_script.py", line 92, in main
+    fig = plt.figure(figsize=(10,10))
+UnboundLocalError: local variable 'i2' referenced before assignment
